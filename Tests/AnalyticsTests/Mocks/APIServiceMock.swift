@@ -1,20 +1,23 @@
 //
-//  AnalyticsServiceMock.swift
+//  APIServiceMock.swift
 //  
 //
-//  Created by Martin Dutra on 30/11/21.
+//  Created by Martin Dutra on 13/12/21.
 //
 
 import Foundation
 @testable import Analytics
 
-class AnalyticsServiceMock: AnalyticsService {
+class APIServiceMock: APIService {
 
     var identified = false
     var forgot = false
     var tracked = false
+    var lastTrackedEvent = ""
 
-    var isEnabled: Bool = true
+    var isEnabled: Bool {
+        return true
+    }
 
     func identify(identity: Identity) {
         identified = true
@@ -23,14 +26,14 @@ class AnalyticsServiceMock: AnalyticsService {
     func identify(statistics: Statistics) {
         identified = true
     }
-    
+
     func forget() {
         forgot = true
     }
 
-    func track(event: Event, element: Element, name: String, params: [String : Any]?) {
+    func track(event: String, params: [String: Any]?) {
         tracked = true
+        lastTrackedEvent = event
     }
-
 
 }

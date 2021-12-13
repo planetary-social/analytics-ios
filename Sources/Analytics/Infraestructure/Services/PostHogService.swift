@@ -10,7 +10,7 @@ import PostHog
 import Logger
 import Secrets
 
-class PostHogService: AnalyticsService {
+class PostHogService: APIService {
 
     var isEnabled: Bool {
         return posthog != nil
@@ -18,9 +18,9 @@ class PostHogService: AnalyticsService {
 
     var posthog: PHGPostHog?
 
-    init() {
+    init(secrets: Secrets = Secrets.shared, middlewares: [PHGMiddleware]? = nil) {
         Logger.shared.info("Configuring PostHog...")
-        guard let apiKey = Secrets.shared.get(key: .posthog) else {
+        guard let apiKey = secrets.get(key: .posthog) else {
             return
         }
 
@@ -33,6 +33,8 @@ class PostHogService: AnalyticsService {
         // Record screen views automatically!
         configuration.recordScreenViews = true
 
+        configuration.middlewares = middlewares
+        
         PHGPostHog.setup(with: configuration)
         
         posthog = PHGPostHog.shared()
@@ -42,39 +44,20 @@ class PostHogService: AnalyticsService {
         posthog?.identify(identity.identifier,
                           properties: ["Network": identity.network,
                                        "$name": identity.name ?? ""])
+        posthog?.enable()
     }
 
     func identify(statistics: Statistics) {
         // TODO: Fill
     }
 
-    func updatePushToken(pushToken: Data?) {
-        // TODO: Remove
-    }
-
-    func optIn() {
-        // TODO: Remove
-    }
-
-    func optOut() {
-        // TODO: Remove
-    }
-
     func forget() {
         posthog?.reset()
+        posthog?.disable()
     }
 
-    func time(event: Event, element: Element, name: Name.RawValue) {
-        // TODO: Remove
-    }
-
-    func track(event: Event, element: Element, name: Name.RawValue, params: [String : Any]?) {
-        let event = event.rawValue
-        let element = element.rawValue
-        //let name = String(name.rawValue)
-
-        posthog?.capture("did", properties: ["element": element, "name": name, "params": params])
-        // UserDefaults.standard.didTrack(event)
+    func track(event: String, params: [String : Any]?) {
+        posthog?.capture(event, properties: params)
     }
 
 }

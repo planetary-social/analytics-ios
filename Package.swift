@@ -19,10 +19,10 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
         .package(name: "Logger",
                  url: "https://github.com/planetary-social/logger-ios",
-                 from: "0.0.1"),
+                 from: "0.0.2"),
         .package(name: "Secrets",
                  url: "https://github.com/planetary-social/secrets-ios",
-                 from: "0.0.1"),
+                 from: "0.0.3"),
         .package(name: "PostHog",
                  url: "https://github.com/PostHog/posthog-ios",
                  from: "1.4.0")
