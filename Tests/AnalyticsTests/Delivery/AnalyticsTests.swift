@@ -70,6 +70,18 @@ final class AnalyticsTests: XCTestCase {
         XCTAssertTrue(service.tracked)
     }
 
+    // MARK: Bot
+
+    func testTrackBotDidUpdateMessages() {
+        analytics.trackBotDidUpdateMessages(count: 2)
+        XCTAssertTrue(service.tracked)
+    }
+
+    func testTrackBotDidSync() {
+        analytics.trackBotDidSkipMessage(key: "noop", reason: "unknown")
+        XCTAssertTrue(service.tracked)
+    }
+
     // MARK: Conversions
 
     func testTrackDidUpdateProfile() {
