@@ -18,4 +18,29 @@ public extension Analytics {
         service.track(event: .did, element: .bot, name: "db_update", param: "inserted", value: "\(count)")
     }
 
+    func trackBodDidUpdateDatabase(count: Int, firstTimestamp: Float64, lastTimestamp: Float64, lastHash: String) {
+        let params = ["msg.count": count,
+                      "first.timestamp": firstTimestamp,
+                      "last.timestamp": lastTimestamp,
+                      "last.hash": lastHash] as [String : Any]
+        service.track(event: .did, element: .bot, name: "db_update", params: params)
+    }
+
+    func trackBotDidRepair(databaseError: String, error: String?, numberOfMessagesInDB: Int64, numberOfMessagesInRepo: UInt, reportedAuthors: Int?, reportedMessages: UInt32?) {
+        var params: [String: Any] = ["sql_error": databaseError,
+                                     "function": "ViewConstraints21012020",
+                                     "viewdb_current": numberOfMessagesInDB,
+                                     "repo_messages_count": numberOfMessagesInRepo] as [String: Any]
+        if let error = error {
+            params["repair_failed"] = error
+        }
+        if let reportedAuthors = reportedAuthors {
+            params["reported_authors"] = reportedAuthors
+        }
+
+        if let reportedMessages = reportedMessages {
+            params["reported_messages"] = reportedMessages
+        }
+        service.track(event: .did, element: .bot, name: "repair", params: params)
+    }
 }
