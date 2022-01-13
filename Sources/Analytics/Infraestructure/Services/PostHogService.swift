@@ -58,6 +58,7 @@ class PostHogService: APIService {
 
     func track(event: String, params: [String : Any]?) {
         posthog?.capture(event, properties: params)
+        UserDefaults.standard.didTrack(event)
     }
 
 }

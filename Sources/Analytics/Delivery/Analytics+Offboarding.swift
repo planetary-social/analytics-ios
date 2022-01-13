@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Analytics {
+public extension Analytics {
 
     func trackOffboardingStart() {
         service.track(event: .did, element: .app, name: "offboarding_start")
