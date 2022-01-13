@@ -40,6 +40,19 @@ public extension Analytics {
         var nameLength = 0
         var phone: String? = nil
         var simulated = false
+
+        public init(allowedBackup: Bool = false, allowedContacts: Bool = false, bio: String? = nil, followingCount: Int = 0, hasImage: Bool = false, joinedDirectory: Bool = false, publicWebHosting: Bool = false, nameLength: Int = 0, phone: String? = nil, simulated: Bool = false) {
+            self.allowedBackup = allowedBackup
+            self.allowedContacts = allowedContacts
+            self.bio = bio
+            self.followingCount = followingCount
+            self.hasImage = hasImage
+            self.joinedDirectory = joinedDirectory
+            self.publicWebHosting = publicWebHosting
+            self.nameLength = nameLength
+            self.phone = phone
+            self.simulated = simulated
+        }
     }
 
     func trackOnboarding(_ step: OnboardingStep) {

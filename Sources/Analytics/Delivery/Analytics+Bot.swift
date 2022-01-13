@@ -43,4 +43,20 @@ public extension Analytics {
         }
         service.track(event: .did, element: .bot, name: "repair", params: params)
     }
+
+    func trackBotDidSync(duration: TimeInterval, numberOfMessages: Int) {
+        let params: [String: Any] = ["duration": duration,
+                                     "number_of_messages": numberOfMessages]
+        service.track(event: .did, element: .bot, name: "sync", params: params)
+    }
+
+    func trackBotDidRefresh(load: Int, duration: TimeInterval, error: Error? = nil) {
+        var params: [String: Any] = ["load": load,
+                                     "duration": duration]
+        if let error = error {
+            params["error"] = error.localizedDescription
+        }
+        service.track(event: .did, element: .bot, name: "refresh", params: params)
+    }
+
 }
