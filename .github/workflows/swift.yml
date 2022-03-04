@@ -17,3 +17,5 @@ jobs:
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme Analytics -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
     - name: Run iOS tests
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme Analytics -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1.2.1
